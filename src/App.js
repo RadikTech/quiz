@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import QuizList from "./components/QuizList";
+import QuizPage from "./components/QuizPage";
+import ScoreSummary from "./components/ScoreSummary";
+import Login from "./login";
 
-function App() {
+const App = () => {
+  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [score, setScore] = useState(0);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="min-h-screen bg-gray-100">  
+        <Routes>
+          <Route path="/" element={<QuizList setSelectedQuiz={setSelectedQuiz} />} />
+          <Route path="/login" element={<Login />} />
+
+          <Route
+            path="/quiz"
+            element={<QuizPage selectedQuiz={selectedQuiz} setScore={setScore} />}
+          />
+          <Route path="/score-summary" element={<ScoreSummary score={score} />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
